@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-    <html lang="pt-br">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
-        </head>
-    <body>
 <?php
 
 if( isset($_POST['nome']) || isset($_POST['qua_parc']) || isset($_POST['valor'])){
@@ -37,7 +29,16 @@ if( isset($_POST['nome']) || isset($_POST['qua_parc']) || isset($_POST['valor'])
     header ("Content-type: application/x-msexcel");
     header ("Content-Disposition: attachment; filename=\"{$Nome_arquivo}\"" );
     header ("Content-Description: PHP Generated Data" );
-
+?>
+    <!DOCTYPE html>
+    <html lang="pt-br">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+    <body>
+<?php
     /**Loop contador de parcelas */
 for( $i = 1; $i <= $quant_par; $i++){             
     $mes++;
