@@ -16,10 +16,10 @@ if( isset($_POST['nome']) || isset($_POST['qua_parc']) || isset($_POST['valor'])
     $valor = number_format($valor, 2, ',', '.');
 
     $data = explode("-",$data);
-    $dia = $data[0];
+    constant( $dia = $data[0];
     $mes = $data[1];
     $ano = $data[2];      
-
+   $Nome_arquivo = "Carne.xls";
 
     // Configurações header para forçar o download
     header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -50,12 +50,12 @@ for( $i = 1; $i <= $quant_par; $i++){
 /**Caso ano for Bi */
     $anoB = $ano/4;
     if (is_int($anoB)){
-        if($dia == 29){
+        if($dia == 29 && $mes == 2){
             $dia = 1;
         }
     }
 /**Caso o dia não existir */
-    if($dia == 30){
+    if($dia == 31){
         switch($mes){
             case 4:
                 $dia = 1;
@@ -71,7 +71,7 @@ for( $i = 1; $i <= $quant_par; $i++){
             break;
         }
     }
-    //$data = date("d/m/Y",mktime(0,0,0,$mes,$dia,$ano));
+   
 
     $html = '
              <style>
@@ -131,7 +131,7 @@ for( $i = 1; $i <= $quant_par; $i++){
                           <td colspan="4" class="subs" class="bo1">Vencimento:</td>
                      </tr>
                      <tr>
-                         <td colspan="4" class="pont" >'.$dia.'/'.$mes.'/'.$ano.'</td>
+                         <td colspan="4" class="pont" >'.date("d-m-y",mktime(0,0,0,$mes,$dia,$ano)).'</td>
                          <td colspan="7"  class="bo2">'.$localP.'</td>
                          <td colspan="4" class="bo1"></td>
                      </tr>
