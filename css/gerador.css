@@ -13,29 +13,32 @@ body{
     height: 100vh;
     align-items: center;
     justify-content: center;
+    background-size: cover;
 }
 .titulo{
     font-family: 'Asap', sans-serif;
-    font-size: 25pt;
+    font-size: 18pt;
     text-align: center;
+    margin-top: 50px;
+}
+.headerTop{
+    width: 100%;
+    height: 300px;
+    background-image: url(../img/fundo.jpg);
 }
 .opcoes{
     display: flex;
-    background-color: #ffffff;
+    flex-direction: column;
     width: 60%;
-    height: 340px;
-    flex-direction: row;
-    flex-wrap: row nowrap;
-    padding: 5px;
-    
+    height: 740px;
+    margin-top: 100px;
+    background-color: #ffffff;
 
 }
 .formulario{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
+    width: 90%;
+    padding: 5px;
+    margin: auto;
 }
 .formulario label{
     font-size: 11pt;
@@ -44,12 +47,11 @@ body{
     margin: 0;
 }
 .formulario input{
-    width: 300px;
-    height: 30px;
+    width: 340px;
+    height: 40px;
     border: none;
-    box-shadow: 1px 0px 2px #00000080;
-    margin: 2px;
-    border-left: 3px solid #00000090;
+    box-shadow: 1px 0px 2px #00000050;
+    margin: 10px;
     padding-left: 10px;
 }
 

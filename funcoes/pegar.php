@@ -1,34 +1,30 @@
 <?php
+date_default_timezone_set('UTC');   
+if(isset($_POST['nome']) || isset($_POST['qua_parc']) || isset($_POST['valor'])){
+    $nameBuyer = addslashes($_POST['nome']);
+    $address = addslashes($_POST['ender']);
+    $city = addslashes($_POST['cidade']);
+    $quantityP = addslashes($_POST['qua_parc'])   ;
+    $valuePay = addslashes($_POST['valor']);
+    $expirationDay = $_POST['data'];
+    $nameSeller = addslashes($_POST['nomeV']);
+    $locationPay = addslashes($_POST['localP']);
+    $observation = addslashes($_POST['obs']);
+    $phone = addslashes($_POST['tell']);
 
-if( isset($_POST['nome']) || isset($_POST['qua_parc']) || isset($_POST['valor'])){
-    $nome = addslashes($_POST['nome']);
-    $cpf =  addslashes($_POST['cpf']);
-    $ender = addslashes($_POST['ender']);
-    $cidade = addslashes($_POST['cidade']);
-    $quant_par = addslashes($_POST['qua_parc'])   ;
-    $valor = addslashes($_POST['valor']);
-    $data = addslashes($_POST['data']);
-    $nomeVen = addslashes($_POST['nomeV']);
-    $localP = addslashes($_POST['localP']);
-    $obs = addslashes($_POST['obs']);
-    $tell = addslashes($_POST['tell']);
+    $valuePay = number_format($valuePay, 2, ',', '.');
+    $expirationDay = explode('-', $expirationDay);
 
-    $valor = number_format($valor, 2, ',', '.');
+    $month = $expirationDay[1];
+    $dayConstant = $expirationDay[2];
+    $year =  $expirationDay[0];      
 
-    $data = explode("-",$data);
-    constant( $dia = $data[0];
-    $mes = $data[1];
-    $ano = $data[2];      
-   $Nome_arquivo = "Carne.xls";
+    define('Expiration', $dayConstant);
 
-    // Configurações header para forçar o download
-    header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-    header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
-    header ("Cache-Control: no-cache, must-revalidate");
-    header ("Pragma: no-cache");
-    header ("Content-type: application/x-msexcel");
-    header ("Content-Disposition: attachment; filename=\"{$Nome_arquivo}\"" );
-    header ("Content-Description: PHP Generated Data" );
+    $nameFile = "Carne.xls";
+
+    /*Configurações header para forçar o download*/
+    
 ?>
     <!DOCTYPE html>
     <html lang="pt-br">
@@ -39,141 +35,156 @@ if( isset($_POST['nome']) || isset($_POST['qua_parc']) || isset($_POST['valor'])
         </head>
     <body>
 <?php
+header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+header ("Cache-Control: no-cache, must-revalidate");
+header ("Pragma: no-cache");
+header ("Content-type: application/x-msexcel");
+header ("Content-Disposition: attachment; filename=\"{$nameFile}\"" );
+header ("Content-Description: PHP Generated Data" );
+
     /**Loop contador de parcelas */
-for( $i = 1; $i <= $quant_par; $i++){             
-    $mes++;
+for( $i = 1; $i <= $quantityP; $i++){ 
+    
+    $day = Expiration;
+    $month++;            
+    if($month > 12){
+        $month = 1;
+        $year++;
+    }
+    
 
-    if($mes > 12  ){
-        $mes = 1;
-        $ano++;
+    $yearBi = ($year/4);
+// /**Caso ano for Bi */
+    
+     if (is_int($yearBi) == false){
+         if(($day > 28) && ($month == 2) ){
+             $day = 3;
+         }
      }
-/**Caso ano for Bi */
-    $anoB = $ano/4;
-    if (is_int($anoB)){
-        if($dia == 29 && $mes == 2){
-            $dia = 1;
-        }
+    
+ /**Caso o dia não existir */
+    if($day == 31){
+        if($month == 4 || $month == 6 || $month == 9 || $month == 11) {
+             $day = 2;
+        }  
     }
-/**Caso o dia não existir */
-    if($dia == 31){
-        switch($mes){
-            case 4:
-                $dia = 1;
-                break;
-            case 6:
-                $dia = 1;
-                break;
-            case 9:
-            $dia = 1;
-                break;
-            case 11:
-                 $dia = 1;
-            break;
-        }
-    }
-   
-
     $html = '
              <style>
                  .tituloTabela{
                          font-size:23pt;
-                         text-align:left;
+                         text-align:center;
+                         border-top:1px solid #a0a0a0;
                   }
                  .subtitulo{
-                         font-size:12pt;
-                         text-align:left;
+                         font-size:11pt;
+                         text-align:center;
                  }
                  td{
                          text-align:left;
                  }
-                 .subs{
-                         font-weight:900;
+            
+                 .borderRight{
+                    border-bottom:1px solid #a0a0a0;
+    
                  }
-                 table{
-                         font-family:calibri;
-                         font-size:11pt;
+            
+                 .borderUp{
+                     border-style:solid;
+                     border-bottom-width:1px;
+                     border-color:#0a0a0a;
                  }
-                 .pont{
-                         border-right:4px dotted black;
+                 .borderCenter{
+                    border-bottom:1px solid #a0a0a0;
+                    border-right:1px solid #a0a0a0;
                  }
-                 .bo1{
-                         border:1px solid black;
+                 .borderRightLef{
+                    border-right:1px solid #a0a0a0;
+                    border-left:1px solid #a0a0a0;
                  }
-                 .bo2{
-                         border-top:1px solid black;
-                         border-bottom:1px solid black;
-                 }
-                 .bo3{
-                         border-top:1px solid black;
-                         border-bottom:1px solid black;
-                 }
+
+                .smallTitle{
+                      font-size:10pt;
+                }
+                .borderLeft{
+                    border-right:1px dotted #a0a0a0;
+                    border-bottom:1px solid #a0a0a0;
+                }
+                .pont{
+                    border-right: 1px dotted #a0a0a0;
+                }
+                
+
 
 
              </style>
 
              <table>
                      <tr>
-                         <td colspan="4" class="pont"></td>
-                         <td class="tituloTabela" colspan="11">Carnê de Pagamento</td>
+                         <td colspan="3" class="pont" class="tituloTabela"></td>
+                         <td class="tituloTabela" colspan="10">Carnê de Pagamento</td>
 
                      </tr>
                      <tr>
-                          <td colspan="4" class="pont"></td>
-                          <td class="subtitulo" colspan="11"  >Sistema CarneMania by:Carlos.E</td>
+                          <td colspan="3" class="pont"></td>
+                          <td class="subtitulo" colspan="11" >Rua João Francelino Cariús, Distrito de Caipu - Loja Bc Variedades</td>
                      </tr>
                      <tr>
-                          <td colspan="4" class="pont"></td>
-                          <td colspan="11" class="subtitulo">'.$tell.'</td>
+                          <td colspan="3"  ></td>
+                          <td colspan="10" class="subtitulo"  > Cell: '.$phone.'</td>
                      </tr>
                      <tr>
-                          <td colspan="4"  class="subs" class="pont">Vencimento:</td>
-                          <td colspan ="7" class="subs" class="bo2">Local de Pagamento:</td>
-                          <td colspan="4" class="subs" class="bo1">Vencimento:</td>
+                          <td colspan="3" class="smallTitle" > Vencimento: </td>
+                          <td colspan="7"  class="smallTitle borderRightLef" > Local de Pagamento:  </td>
+                          <td colspan="3"  class="borderRight smallTitle"> Vencimento: </td>
                      </tr>
                      <tr>
-                         <td colspan="4" class="pont" >'.date("d-m-y",mktime(0,0,0,$mes,$dia,$ano)).'</td>
-                         <td colspan="7"  class="bo2">'.$localP.'</td>
-                         <td colspan="4" class="bo1"></td>
+                         <td colspan="3"  class="borderLeft" >'.$day.' / '.$month.' / '.$year.'</td>
+                         <td colspan="7" class="borderCenter" >'.$locationPay.'</td>
+                         <td colspan="3"  class="borderRight">'.$day.' / '.$month.' / '.$year.'</td>
                      </tr>
                      <tr>
-                         <td colspan="4" class="subs" class="pont" >(=) Valor do Documento:</td>
-                         <td colspan="7" class="subs"  class="bo2">Nome/cliente:</td>
-                         <td colspan="4" class="subs" class="bo1">(=)Valor do Documento:</td>
+                         <td colspan="3"  class="smallTitle "> (=) Valor do Documento: </td>
+                         <td colspan="7" class="smallTitle borderRightLef" >Nome/cliente:</td>
+                         <td colspan="3"  class="">(=)Valor do Documento: </td>
                      </tr>
                      <tr>
-                         <td colspan="4" class="pont" >'.$valor.' </td>
-                         <td colspan="7"  class="bo2">'.$nomeVen.'</td>
-                         <td colspan="4" class="bo1">'.$valor.'</td>
+                         <td colspan="3"  class="borderLeft" >R$: '.$valuePay.' </td>
+                         <td colspan="7"  class="borderCenter">'.$nameBuyer.'</td>
+                         <td colspan="3"  class="borderRight">R$: '.$valuePay.'</td>
                      </tr>
                      <tr>
-                         <td colspan="4" class="subs" class="pont">Nº Parcela/Total:</td>
-                         <td colspan="7" class="subs"  class="bo2">Endereço/cliente:</td>
-                         <td colspan="4" class="subs" class="bo1">Nº Parcela/Total:</td>
+                         <td colspan="3" class="smallTitle ">   Nº Parcela/Total Parc:  </td>
+                         <td colspan="7" class="smallTitle borderRightLef">  Endereço/cliente:</td>
+                         <td colspan="3" class="smallTitle ">    Nº Parcela/Total Parc: </td>
                      </tr>
                      <tr>
-                         <td colspan="4" class="pont" >'.$i.' | '.$quant_par.'</td>
-                         <td colspan="7"  class="bo2">Rua João Farncelino 98 Caipu</td>
-                         <td colspan="4" class="bo1">'.$i.' | '.$quant_par.'</td>
+                         <td colspan="3" class="borderLeft" >'.$i.' // '.$quantityP.'</td>
+                         <td colspan="7" class="borderCenter">'.$address.' '.$city.'Caipu</td>
+                         <td colspan="3" class="borderRight">'.$i.' // '.$quantityP.'</td>
                      </tr>
                      <tr>
-                         <td colspan="4" class="subs" class="pont" >Valor Pago</td>
-                         <td colspan="7" class="subs"  class="bo2">Observações</td>
-                         <td colspan="4" class="subs" class="bo1">Valor Pago:</td>
+                         <td colspan="3" class="smallTitle">   (=)Valor Pago:    </td>
+                         <td colspan="7" classs="smallTitle borderRightLef">  Observações:     </td>
+                         <td colspan="3"  class=" smallTitle borderRight2"> (=) Valor Pago:    </td>
                      </tr>
                      <tr>
-                         <td colspan="4" class="subs" class="pont" >Visto do Responsável</td>
-                         <td colspan="7" rowspan="2"  class="bo2">'.$obs.'</td>
-                         <td colspan="4" class="subs"  class="subs" class="bo1">Visto do Responsável</td>
+                         <td colspan="3"  class="borderLeft ">   Visto do Responsável     </td>
+                         <td colspan="7" rowspan="2"  class="borderCenter">'.$observation.'</td>
+                         <td colspan="3" class="borderRight">     Visto do Responsável  </td>
                      </tr>
                      <tr>
-                         <td colspan="4" class="pont">Pago em ___/___/___ </td>
-                         <td colspan="4" class="bo1">Pago em ___/___/___</td>
+                         <td colspan="3" class="borderLeft">Pago em ___/___/___ </td>
+                         <td colspan="3" class="borderRight">Pago em ___/___/___</td>
                      </tr>
 
              </table> <br>';
-        echo $html;
-    }
-            exit;    
+             echo $html;
+    }    
+
+// Envia o conteúdo do arquivo
+
+exit; 
 }
       ?>
     
