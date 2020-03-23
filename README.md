@@ -12,6 +12,7 @@ Gera uma a quantidade de carnês que o usuário escolhe e com data de vencimento
 
 existem alguns bugs na formatação da tabela no exel mas vou resolvelos;
 
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 
 
@@ -24,7 +25,8 @@ Generates a number of sheep that the user selects and with fixed maturity data;
 
 there are some errors in the formation of the table in exel but I will solve it;
 
+<br><br><br><br>
 
-@autor: Carlos Emannoel
-@local: Cariús - Ce
+@autor: <a href="https://www.instagram.com/c.emannoel.php/"> Carlos Emannoel</a> <br>
+@local: Cariús - Ce <br>
 @data: 22/03/2020
