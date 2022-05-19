@@ -6,7 +6,7 @@ Versão Beta
 
 Gerador de carnê simples desenvolvido por mim em php;
 
-link para testes! www.carloscarneiro.site
+
 
 Gera uma a quantidade de carnês que o usuário escolhe e com data de vencimento fixa;
 
